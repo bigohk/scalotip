@@ -38,9 +38,9 @@ object HOTPTimeBased {
     Array(1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000)
 
 
-  def generateTOTP(key: String, slot: BigInt, returnDigits: Int): String = generateTOTP2(key, slot, returnDigits, "HmacSHA1")
-  def generateTOTP256(key: String, slot: BigInt, returnDigits: Int): String = generateTOTP2(key, slot, returnDigits, "HmacSHA256")
-  def generateTOTP512(key: String, slot: BigInt, returnDigits: Int): String = generateTOTP2(key, slot, returnDigits, "HmacSHA512")
+  def generateTOTP(seed: String, slot: BigInt, returnDigits: Int): String = generateTOTP2(seed, slot, returnDigits, "HmacSHA1")
+  def generateTOTP256(seed: String, slot: BigInt, returnDigits: Int): String = generateTOTP2(seed, slot, returnDigits, "HmacSHA256")
+  def generateTOTP512(seed: String, slot: BigInt, returnDigits: Int): String = generateTOTP2(seed, slot, returnDigits, "HmacSHA512")
   private def generateTOTP2(seed: String, slot: BigInt, returnDigits: Int, crypto: String): String = {
     val hash = hmac_sha(crypto, hexStr2Bytes(seed), slot.toByteArray.reverse.padTo(8, 0.toByte).reverse)
     val offset = hash(hash.length - 1) & 0xf
